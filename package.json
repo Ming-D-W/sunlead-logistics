@@ -1,5 +1,5 @@
 {
-  "name": "pinda-logistics",
+  "name": "shenling-logistics",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,11 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "echarts": "^5.4.1",
+    "echarts-liquidfill": "^3.1.0",
+    "element-ui": "^2.15.13",
+    "js-cookie": "^3.0.1",
+    "moment": "^2.29.4",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
@@ -22,6 +27,7 @@
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-standard": "^6.1.0",
+    "axios": "^1.3.2",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
