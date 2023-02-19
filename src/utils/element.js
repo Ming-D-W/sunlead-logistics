@@ -7,10 +7,10 @@ import {
   Input,
   Main,
   Menu,
-  MenuItem, Row,
+  MenuItem, Option, Row, Select,
   Submenu,
   Table,
-  TableColumn, Tooltip
+  TableColumn, Tooltip, Tree
 } from 'element-ui'
 import Vue from 'vue'
 
@@ -30,7 +30,10 @@ const uiList = [
   Row,
   Col,
   Card,
-  Tooltip
+  Tooltip,
+  Tree,
+  Select,
+  Option
 ]
 
 uiList.forEach(item => {

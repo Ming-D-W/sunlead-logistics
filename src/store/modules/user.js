@@ -35,6 +35,7 @@ const mutations = {
     delTime()
     removeToken()
     delUserInfo()
+    router.push('/login')
   },
   setRouterDic (state, data) {
     state.routerDictionaries = data

@@ -21,6 +21,23 @@ const routes = [
   {
     path: '/login',
     component: Login
+  }, {
+    path: '/branches',
+    component: Layout,
+    children: [
+      {
+        path: '/branches/organization-manage',
+        component: () => import('@/views/branches/organization-manage')
+      },
+      {
+        path: '/branches/institutions-jobs-area',
+        component: () => import('@/views/branches/institutions-jobs-area')
+      },
+      {
+        path: '/transit/freight-manage',
+        component: () => import('@/views/branches/freight-manage')
+      }
+    ]
   }
 ]
 

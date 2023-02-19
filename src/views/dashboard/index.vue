@@ -109,27 +109,170 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="10"></el-col>
+      <el-col :span="10">
+        <el-card class="backlog">
+          <div class="header">
+            <p class="p-t title">执行中任务
+              <el-tooltip effect="dark" content="Bottom Left 提示文字" placement="bottom-start">
+                <template #content>
+                  123123
+                </template>
+                <img src="@/assets/question.png" alt="tooltips" style="width: 20px;height: 20px;">
+              </el-tooltip>
+            </p>
+            <div class="refresh-box">{{ $moment(new Date()).format('YYYY-MM-DD HH:mm') }}
+            </div>
+          </div>
+          <div class="charts-container">
+            <div ref="chartsFive" class="chart" style="width: 50%"/>
+            <div ref="chartsSix" class="chart" style="width: 50%"/>
+          </div>
+          <div class="charts-container">
+            <div class="label" style="width: 50%">
+              <span>代取件 </span>
+              <span style="color: #d15e41">{{ backlog.waitingPickupNumber }}</span>
+            </div>
+            <div class="label" style="width: 50%">
+              <span>代派件 </span>
+              <span style="color: #d15e41">{{ backlog.waitingDispatchNumber }}</span>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col>
+        <el-card class="functions">
+          <div class="header">
+            <p class="p-t">常用功能</p>
+          </div>
+          <div class="function-box">
+            <div class="item">
+              <div class="icon">
+                <img src="@/assets/functions/trans-work.png" alt="快递作业">
+              </div>
+              <div class="content">快递作业</div>
+            </div>
+            <div class="item">
+              <div class="icon">
+                <img src="@/assets/functions/trans-mission.png" alt="运输任务">
+              </div>
+              <div class="content">运输任务</div>
+            </div>
+            <div class="item">
+              <div class="icon">
+                <img src="@/assets/functions/line-manager.png" alt="线路管理">
+              </div>
+              <div class="content">线路管理</div>
+            </div>
+            <div class="item">
+              <div class="icon">
+                <img src="@/assets/functions/car-manager.png" alt="车辆管理">
+              </div>
+              <div class="content">车辆管理</div>
+            </div>
+            <div class="item">
+              <div class="icon">
+                <img src="@/assets/functions/driver-manager.png" alt="司机管理">
+              </div>
+              <div class="content">司机管理</div>
+            </div>
+            <div class="item">
+              <div class="icon">
+                <img src="@/assets/functions/money-check.png" alt="运费查询">
+              </div>
+              <div class="content">运费查询</div>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="12">
+        <el-card>
+          <p class="p-t">线路管理</p>
+          <div ref="lineManagerCharts" style="height: 401px"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card class="trans-mission">
+          <p class="p-t">运输任务</p>
+          <auto-table :tableData="transportTaskList"/>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="12">
+        <el-card class="order-total">
+          <div class="header">
+            <p class="p-t">订单总量</p>
+            <div class="right">2022-08 - 2023-01</div>
+          </div>
+          <div class="unit">
+            单位：笔
+          </div>
+          <div class="order-static">
+            <div class="item">
+              <div class="num">{{ orderLineChart.orderMaxNumber }}</div>
+              <div class="label">订单最高值</div>
+            </div>
+            <div class="item">
+              <div class="num">{{ orderLineChart.orderAverageNumber }}</div>
+              <div class="label">订单平均值</div>
+            </div>
+            <div class="item">
+              <div class="num">{{ orderLineChart.orderMinNumber }}</div>
+              <div class="label">订单最低值</div>
+            </div>
+          </div>
+          <div ref="order-charts" class="order-charts"></div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card class="order-total">
+          <div class="header">
+            <p class="p-t">订单分布</p>
+            <div class="right">2022-08 - 2023-01</div>
+          </div>
+          <div class="unit">
+            单位：笔
+          </div>
+          <div ref="distribution-charts" class="order-charts" style="height: 480px"></div>
+        </el-card>
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import chinaMap from '@/assets/json/china.json'
 import { getWorkspace } from '@/api/workspace'
+import {
+  lineManager,
+  liquidFillForth,
+  liquidFillOne,
+  liquidFillThree,
+  liquidFillTwo,
+  orderCount,
+  orderDistribution
+} from '@/utils/echarts'
+import AutoTable from '@/views/dashboard/components/AutoTable/index.vue'
 
 export default {
   name: 'dashboard-page',
+  components: { AutoTable },
   data () {
     return {
       backlog: {},
       orderLineChart: {},
       organOverview: {},
       todayData: {},
-      transportTaskList: {}
+      transportTaskList: []
     }
   },
   methods: {
     async initData () {
+      this.$echarts.registerMap('china', { geoJSON: chinaMap })
       const {
         data: {
           backlog,
@@ -146,59 +289,87 @@ export default {
       this.transportTaskList = transportTaskList
     },
     initMyCharts () {
+      const that = this
       const myChartOne = this.$echarts.init(this.$refs.charts)
-      // const myChartTwo = this.$echarts.init(this.$refs.chartsTwo)
-      // const myChartThree = this.$echarts.init(this.$refs.chartsThree)
-      // const myChartForth = this.$echarts.init(this.$refs.chartsForth)
-      const options = {
-        backgroundColor: '#fff',
-        graphic: [
+      const myChartTwo = this.$echarts.init(this.$refs.chartsTwo)
+      const myChartThree = this.$echarts.init(this.$refs.chartsThree)
+      const myChartForth = this.$echarts.init(this.$refs.chartsForth)
+      const myChartFive = this.$echarts.init(this.$refs.chartsFive)
+      const myChartSix = this.$echarts.init(this.$refs.chartsSix)
+
+      const options = liquidFillOne(this.backlog.waitingPickupRate)
+      const optionsTwo = liquidFillTwo(this.backlog.waitingDispatchRate)
+      const optionsThree = liquidFillThree(this.backlog.unassignedTransportTaskRate)
+      const optionsForth = liquidFillForth(this.backlog.timeoutTransportTaskRate)
+      const optionsFive = liquidFillOne(this.todayData.taskInTransitRate)
+      const optionsSix = liquidFillTwo(this.todayData.taskInDeliveryRate)
+
+      // 订单总量
+      const orderCharts = this.$echarts.init(this.$refs['order-charts'])
+      const xData = this.orderLineChart.monthlyOrderList.map(item => item.dateTime)
+      const yData = this.orderLineChart.monthlyOrderList.map(item => item.orderNumber)
+      const orderOptions = orderCount(that, xData, yData)
+
+      // 订单分布
+      const distributionCharts = this.$echarts.init(this.$refs['distribution-charts'])
+      const distributionOptions = orderDistribution()
+
+      // 线路管理
+      const arr = [
+        [
           {
-            type: 'group',
-            left: 'center',
-            top: '58%'
+            name: '北京'
+          },
+          {
+            name: '浙江'
           }
-        ],
-        series: [
+        ], [
           {
-            type: 'liquidFill', // 水位图
-            radius: '60%', // 显示比例
-            center: ['50%', '50%'], // 中心点
-            data: [0.42], // data个数代表波浪数
-            color: ['rgba(226, 93, 62, 1)'], // 波浪颜色
-            backgroundStyle: {
-              color: '#ffe5e0'
-            },
-            label: {
-              // 标签设置
-              position: ['50%', '50%'],
-              formatter: 0.42 * 100 + '%', // 显示文本
-              fontSize: '20px',
-              fontFamily: 'DINAlternate-Bold',
-              fontWeight: '100',
-              color: '#000',
-              insideColor: '#000'
-            },
-            outline: {
-              show: true,
-              borderDistance: 5,
-              itemStyle: {
-                borderColor: 'red',
-                borderWidth: 1
-              }
-            },
-            itemStyle: {
-              opacity: 0.95,
-              shadowColor: 'rgba(0, 0, 0, 0)'
-            }
+            name: '安徽'
+          },
+          {
+            name: '浙江'
+          }
+        ], [
+          {
+            name: '湖南'
+          },
+          {
+            name: '浙江'
+          }
+        ], [
+          {
+            name: '四川'
+          },
+          {
+            name: '浙江'
+          }
+        ], [
+          {
+            name: '青海'
+          },
+          {
+            name: '浙江'
           }
         ]
-      }
+      ]
+      const lineManagerCharts = this.$echarts.init(this.$refs.lineManagerCharts)
+      const lineManagerOptions = lineManager(arr)
+
       myChartOne.setOption(options)
+      myChartTwo.setOption(optionsTwo)
+      myChartThree.setOption(optionsThree)
+      myChartForth.setOption(optionsForth)
+      myChartFive.setOption(optionsFive)
+      myChartSix.setOption(optionsSix)
+      orderCharts.setOption(orderOptions)
+      distributionCharts.setOption(distributionOptions)
+      lineManagerCharts.setOption(lineManagerOptions)
     }
   },
   async mounted () {
     await this.initData()
+    this.transportTaskList = [...this.transportTaskList, ...this.transportTaskList, ...this.transportTaskList]
     this.initMyCharts(this.backlog)
   }
 }
@@ -354,6 +525,8 @@ export default {
   }
 
   .backlog {
+    padding: 3px 0;
+
     .header {
       .title {
         display: flex;
@@ -375,12 +548,98 @@ export default {
       }
 
       .label {
-        margin-top: -20px;
+        margin-top: -25px;
         z-index: 100;
         width: 25%;
         text-align: center;
       }
     }
+  }
+
+  .functions {
+    .function-box {
+      display: flex;
+      justify-content: space-between;
+
+      .item {
+        width: 15.15%;
+        cursor: pointer;
+        background: #fafafb;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+          color: #d15e41;
+        }
+
+        .icon {
+          margin: 20px 150px 0;
+
+          img {
+            width: 40px;
+            height: 40px;
+          }
+        }
+
+        .content {
+          margin: 16px 0;
+        }
+      }
+    }
+  }
+
+  .trans-mission {
+    .seamless-warp {
+      height: 400px;
+      overflow: hidden;
+    }
+
+  }
+
+  .order-total {
+    .header {
+      height: 30px;
+
+      .right {
+        font-size: 12px;
+        color: #818693;
+      }
+    }
+
+    .unit {
+      font-size: 14px;
+      color: #818693;
+      margin-bottom: 14px;
+    }
+
+    .order-static {
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: 38px;
+
+      .num {
+        font-size: 28px;
+        color: #e15536;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+
+      .label {
+        font-size: 12px;
+        color: #818693;
+        text-align: center;
+      }
+    }
+  }
+
+  .order-charts {
+    height: 400px;
+    width: 100%;
+    min-width: 40px;
   }
 }
 </style>

@@ -15,7 +15,7 @@
               <i :class="item.meta.icon"/>
               <span slot="title">{{ item.meta.title }}</span>
             </template>
-            <el-menu-item v-for="childItem in item.children" :index="item.path" :key="childItem.id">
+            <el-menu-item v-for="childItem in item.children" :index="childItem.path" :key="childItem.id">
               <i :class="childItem.meta.icon"/>
               <span slot="title">{{ childItem.meta.title }}</span>
             </el-menu-item>
@@ -31,12 +31,19 @@
             </div>
             <span>{{ username }}</span>
             <div class="divide"/>
-            <div class="logout">
+            <div class="logout" @click="logout">
               <img src="@/assets/logout.png" alt="logout">
             </div>
           </div>
         </div>
-        <router-view/>
+        <div class="main-container">
+          <router-view/>
+        </div>
+        <footer>
+          <div>江苏传智播客教育科技股份有限公司</div>
+          <div>版权所有Copyright 2006-2022 All Rights Reserved</div>
+          <div>苏ICP备16007882号-11</div>
+        </footer>
       </el-main>
     </el-container>
   </div>
@@ -52,7 +59,11 @@ export default {
       defaultAvatar: require('@/assets/default.avatar.jpg')
     }
   },
-  methods: {},
+  methods: {
+    logout () {
+      this.$store.commit('user/logoutMutation')
+    }
+  },
   computed: {
     ...mapGetters(['router', 'avatar', 'username', 'routerDictionaries'])
   }
@@ -61,6 +72,8 @@ export default {
 
 <style scoped lang="scss">
 .dashboard-page {
+  position: relative;
+
   .el-container {
     height: 100vh;
 
@@ -87,12 +100,15 @@ export default {
       padding: 0 12px;
 
       .title {
+        position: fixed;
+        top: 0;
+        width: calc(100% - 243px);
         padding-top: 25px;
+        background-color: #f3f5f9;
         display: flex;
         justify-content: space-between;
-        margin-right: 10px;
-        margin-bottom: 10px;
         height: 31px;
+        z-index: 10;
 
         .left {
           font-size: 16px;
@@ -105,7 +121,7 @@ export default {
           display: flex;
           align-items: center;
           cursor: pointer;
-          margin-top: -5px;
+          margin-top: -15px;
 
           &:hover {
             background-color: #edeff3;
@@ -144,6 +160,24 @@ export default {
             }
           }
         }
+      }
+
+      .main-container {
+        padding-top: 65px;
+        padding-bottom: 56px;
+      }
+
+      footer {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        padding: 20px 0;
+        display: flex;
+        justify-content: center;
+        background: #f3f4f7;
+        font-size: 14px;
+        color: rgb(186, 192, 205);
+        text-align: center;
       }
     }
   }
