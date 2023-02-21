@@ -11,6 +11,15 @@ import '@/style/scss/index.scss'
 import moment from 'moment' // 引入插件
 import * as echarts from 'echarts'
 import scroll from 'vue-seamless-scroll'
+import BaiduMap from 'vue-baidu-map'
+import MyComponents from '@/components/index'
+
+Vue.use(MyComponents)
+
+Vue.use(BaiduMap, {
+  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+  ak: '72Ck74vvxLYuGohTzGqZwSCRpsFo6SO5'
+})
 
 Vue.use(scroll)
 
