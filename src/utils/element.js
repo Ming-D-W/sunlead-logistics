@@ -1,13 +1,13 @@
 import {
   Aside,
-  Button, Card, Col,
-  Container,
+  Button, Card, Checkbox, CheckboxGroup, Col,
+  Container, Dialog,
   Form,
   FormItem,
-  Input,
+  Input, Link, Loading,
   Main,
   Menu,
-  MenuItem, Option, Row, Select,
+  MenuItem, Message, MessageBox, Option, Pagination, Row, Select,
   Submenu,
   Table,
   TableColumn, Tooltip, Tree
@@ -33,9 +33,21 @@ const uiList = [
   Tooltip,
   Tree,
   Select,
-  Option
+  Option,
+  Pagination,
+  Link,
+  Dialog,
+  Checkbox,
+  CheckboxGroup
 ]
 
 uiList.forEach(item => {
   Vue.use(item)
 })
+
+Vue.prototype.$loading = Loading.service
+Vue.prototype.$msgbox = MessageBox
+Vue.prototype.$alert = MessageBox.alert
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.prototype.$prompt = MessageBox.prompt
+Vue.prototype.$message = Message
