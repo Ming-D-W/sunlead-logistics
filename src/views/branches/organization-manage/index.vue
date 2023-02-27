@@ -120,7 +120,7 @@
             <el-table-column label="系统角色" prop="roleNames[0]"/>
             <el-table-column label="账号状态">
               <template #default="{row}">
-                <div class="status">{{ row.status === 1 ? '正常' : '异常' }}</div>
+                <MyStatus :text="['异常','正常']" :status="row.status"/>
               </template>
             </el-table-column>
           </el-table>
@@ -150,10 +150,14 @@ import {
   getTreeOrganApi
 } from '@/api/organization-manage'
 import LeftTree from '@/views/branches/components/left-tree/index.vue'
+import MyStatus from '@/components/MyStatus/index.vue'
 
 export default {
   name: 'organization-manage',
-  components: { LeftTree },
+  components: {
+    MyStatus,
+    LeftTree
+  },
   data () {
     return {
       treeData: [],
@@ -283,22 +287,6 @@ export default {
       .el-table {
         border: 1px solid #eee;
       }
-
-      .status {
-        display: flex;
-        align-items: center;
-
-        &::before {
-          display: block;
-          margin-right: 6px;
-          content: '';
-          width: 6px;
-          height: 6px;
-          border-radius: 3px;
-          background: #5ec480;
-        }
-      }
-
     }
   }
 }

@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="map-container">
-        <baidu-map class="map" :center="mapCenter" :zoom="11">
+        <baidu-map class="map" :center="mapCenter" :zoom="15">
           <bm-polygon fill-color="#edcbc7" strokeStyle="dashed" :path="polygonPath" stroke-color="red"
                       :stroke-opacity="0"
                       :stroke-weight="2"

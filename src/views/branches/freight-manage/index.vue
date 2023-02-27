@@ -9,7 +9,9 @@
         <el-table-column label="运送类型" prop="transportType">
           <template #default="{row}">{{ formatterTransport(row.transportType) }}</template>
         </el-table-column>
-        <el-table-column label="关联城市" prop="associatedCityList"/>
+        <el-table-column label="关联城市" prop="associatedCityList">
+          <template #default="{row}">{{ formatterCity(row.associatedCityList[0]) }}</template>
+        </el-table-column>
         <el-table-column label="首重" prop="firstWeight"/>
         <el-table-column label="续重" prop="continuousWeight"/>
         <el-table-column label="轻抛系数" prop="lightThrowingCoefficient"/>
@@ -78,6 +80,7 @@ const templateType = {
   4: '跨省'
 }
 const cityType = {
+  1: '全国',
   2: '京津冀',
   3: '江浙沪',
   4: '川渝',
@@ -97,6 +100,9 @@ export default {
         {
           label: '普快',
           value: 1
+        }, {
+          label: '特快',
+          value: 2
         }
       ],
       templateOptions: [
@@ -161,6 +167,9 @@ export default {
     },
     formatterTemplate (data) {
       return templateType[data]
+    },
+    formatterCity (data) {
+      return cityType[data]
     },
     async submit () {
       await this.$refs.addForm.validate()

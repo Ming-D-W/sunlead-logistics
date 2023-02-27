@@ -51,3 +51,19 @@ export function getCarriagesList () {
     url: '/carriages'
   })
 }
+
+// 获取机构业务范围
+export function getOrganArea (id) {
+  return request({
+    method: 'GET',
+    url: `/business-hall/scope/${id}/1?0=${id}`
+  })
+}
+
+// 删除作业范围
+export function delWorkArea (id, type) {
+  return request({
+    method: 'DELETE',
+    url: `/business-hall/scope/${id}/${type}`
+  })
+}
