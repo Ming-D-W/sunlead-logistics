@@ -15,5 +15,10 @@ export function routerDictionary (arr) {
   arr.forEach(item => {
     routerMap[item.path] = item.name
   })
+  routerMap['/transit/vehicle-detail/'] = '车辆详情'
+  routerMap['/transit/car-register-info'] = '回单查看'
+  routerMap['/branches/MapContent'] = '作业范围分配'
+  routerMap['/transit/driver-detail'] = '司机详情'
+  routerMap['/transit/workArrange-setting'] = '排班设置'
   return routerMap
 }

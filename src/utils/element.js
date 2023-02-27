@@ -1,16 +1,17 @@
 import {
+  Alert,
   Aside,
   Button, Card, Checkbox, CheckboxGroup, Col,
-  Container, Dialog,
+  Container, DatePicker, Dialog,
   Form,
   FormItem,
   Input, Link, Loading,
   Main,
   Menu,
-  MenuItem, Message, MessageBox, Option, Pagination, Row, Select,
+  MenuItem, Message, MessageBox, Option, Pagination, Progress, Radio, RadioGroup, Row, Select,
   Submenu,
   Table,
-  TableColumn, Tooltip, Tree
+  TableColumn, TabPane, Tabs, Tooltip, Tree, Upload
 } from 'element-ui'
 import Vue from 'vue'
 
@@ -38,7 +39,16 @@ const uiList = [
   Link,
   Dialog,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  Loading,
+  Tabs,
+  TabPane,
+  Upload,
+  Progress,
+  DatePicker,
+  Alert,
+  Radio,
+  RadioGroup
 ]
 
 uiList.forEach(item => {

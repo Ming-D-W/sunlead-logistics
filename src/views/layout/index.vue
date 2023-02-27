@@ -5,7 +5,7 @@
         <div class="logo-container">
           <img src="@/assets/logoSiderBar.png" alt="logo">
         </div>
-        <el-menu style="border:0" router default-active="/dashboard">
+        <el-menu style="border:0" router :default-active="$route.path" :unique-opened="true">
           <el-menu-item :index="router[0].path">
             <i :class="router[0].meta.icon"></i>
             <span slot="title">{{ router[0].meta.title }}</span>
@@ -24,7 +24,15 @@
       </el-aside>
       <el-main>
         <div class="title">
-          <div class="left">{{ routerDictionaries[$route.path] }}</div>
+          <div class="left">
+            <div class="back" @click="$router.back()"
+                 v-if="$route?.query?.formUrlName==='车辆管理'||$route.query?.id||$route.query?.agencyName||routerList.includes($route.path)">
+              <i class="el-icon-back"/>
+              <div>返回</div>
+              <span>|</span>
+            </div>
+            {{ routerDictionaries[$route.path] }}
+          </div>
           <div class="right">
             <div class="avatar">
               <img v-imgerror="defaultAvatar" :src="avatar" alt="avatar">
@@ -56,7 +64,10 @@ export default {
   name: 'layout-page',
   data () {
     return {
-      defaultAvatar: require('@/assets/default.avatar.jpg')
+      defaultAvatar: require('@/assets/default.avatar.jpg'),
+      routerList: [
+        '/transit/workArrange-setting'
+      ]
     }
   },
   methods: {
@@ -114,6 +125,33 @@ export default {
           font-size: 16px;
           font-weight: bold;
           margin-left: 14px;
+          display: flex;
+          align-items: center;
+          margin-top: -10px;
+
+          .back {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: normal;
+            cursor: pointer;
+            margin-right: 20px;
+
+            i {
+              display: block;
+              font-size: 18px;
+              margin-top: -2px;
+              padding-right: 8px;
+            }
+
+            span {
+              display: block;
+              height: 20px;
+              color: #dddfe5;
+              padding-left: 20px;
+            }
+
+          }
         }
 
         .right {
@@ -165,6 +203,8 @@ export default {
       .main-container {
         padding-top: 65px;
         padding-bottom: 56px;
+        height: 100%;
+        box-sizing: border-box;
       }
 
       footer {
