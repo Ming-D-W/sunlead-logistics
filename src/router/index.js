@@ -87,6 +87,38 @@ const routes = [
         component: () => import('@/views/employess/workArrange-setting')
       }
     ]
+  },
+  {
+    path: '/business',
+    component: Layout,
+    children: [
+      {
+        path: 'order-manage',
+        component: () => import('@/views/business/order-manage')
+      },
+      {
+        path: 'edit-order',
+        component: () => import('@/views/business/order-manage/edit-order.vue')
+      },
+      {
+        path: 'waybill',
+        component: () => import('@/views/business/waybill')
+      },
+      {
+        path: 'waybill-detail',
+        component: () => import('@/views/business/waybill/waybill-detail.vue')
+      }
+    ]
+  },
+  {
+    path: '/transport',
+    component: Layout,
+    children: [
+      {
+        path: 'transport-task',
+        component: () => import('@/views/transport/transport-task')
+      }
+    ]
   }
 ]
 

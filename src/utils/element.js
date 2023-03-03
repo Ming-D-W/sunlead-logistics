@@ -1,20 +1,22 @@
 import {
   Alert,
   Aside,
-  Button, Card, Checkbox, CheckboxGroup, Col,
+  Button, Card, Checkbox, CheckboxGroup, Col, Collapse, CollapseItem,
   Container, DatePicker, Dialog,
   Form,
   FormItem,
   Input, Link, Loading,
   Main,
   Menu,
-  MenuItem, Message, MessageBox, Option, Pagination, Progress, Radio, RadioGroup, Row, Select,
+  MenuItem, Message, MessageBox, Option, Pagination, Progress, Radio, RadioGroup, Row, Select, Step, Steps,
   Submenu,
   Table,
-  TableColumn, TabPane, Tabs, Tooltip, Tree, Upload
+  TableColumn, TabPane, Tabs, TimePicker, Tooltip, Tree, Upload
 } from 'element-ui'
 import Vue from 'vue'
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 
+Vue.component(CollapseTransition.name, CollapseTransition)
 const uiList = [
   Input,
   Form,
@@ -48,7 +50,14 @@ const uiList = [
   DatePicker,
   Alert,
   Radio,
-  RadioGroup
+  RadioGroup,
+  Checkbox,
+  CheckboxGroup,
+  TimePicker,
+  Collapse,
+  CollapseItem,
+  Steps,
+  Step
 ]
 
 uiList.forEach(item => {

@@ -22,7 +22,7 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main>
+      <el-main style="position: relative">
         <div class="title">
           <div class="left">
             <div class="back" @click="$router.back()"
@@ -44,10 +44,10 @@
             </div>
           </div>
         </div>
-        <div class="main-container">
+        <div class="main-container" :class="{'main-pb':$route.path==='/dashboard'}">
           <router-view/>
         </div>
-        <footer>
+        <footer :class="{bottom:$route.path==='/dashboard'}">
           <div>江苏传智播客教育科技股份有限公司</div>
           <div>版权所有Copyright 2006-2022 All Rights Reserved</div>
           <div>苏ICP备16007882号-11</div>
@@ -66,7 +66,8 @@ export default {
     return {
       defaultAvatar: require('@/assets/default.avatar.jpg'),
       routerList: [
-        '/transit/workArrange-setting'
+        '/transit/workArrange-setting',
+        '/business/edit-order'
       ]
     }
   },
@@ -202,15 +203,13 @@ export default {
 
       .main-container {
         padding-top: 65px;
-        padding-bottom: 56px;
-        height: 100%;
         box-sizing: border-box;
+      }
+      .main-pb {
+        padding-bottom: 56px;
       }
 
       footer {
-        width: 100%;
-        position: fixed;
-        bottom: 0;
         padding: 20px 0;
         display: flex;
         justify-content: center;
@@ -218,6 +217,12 @@ export default {
         font-size: 14px;
         color: rgb(186, 192, 205);
         text-align: center;
+      }
+      .bottom {
+        width: calc(100% - 243px);
+        position: fixed;
+        bottom: 0;
+        z-index: 100;
       }
     }
   }
