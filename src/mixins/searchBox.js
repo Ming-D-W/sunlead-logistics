@@ -8,7 +8,7 @@ export default {
   },
   data () {
     return {
-      searchText: '',
+      searchText: {},
       treeData: [],
       loading: false,
       tableData: [],

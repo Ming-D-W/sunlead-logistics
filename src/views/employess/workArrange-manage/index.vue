@@ -49,7 +49,7 @@
         </el-row>
       </el-form>
     </el-card>
-    <el-card style="margin-top: 20px;padding-bottom: 65px">
+    <el-card style="margin-top: 20px">
       <el-row style="margin-bottom: 20px">
         <el-button type="primary" @click="$router.push('/transit/workArrange-setting')">排班设置</el-button>
         <el-button type="primary" plain @click="handlePattern">绑定排班</el-button>
@@ -220,10 +220,6 @@ export default {
   ::v-deep .el-input--suffix .el-input__inner {
     width: 100%;
   }
-
-  //::v-deep .top-card .el-card__body {
-  //  padding-bottom: 0 !important;
-  //}
 
   ::v-deep .vue-treeselect__placeholder {
     line-height: 40px;
