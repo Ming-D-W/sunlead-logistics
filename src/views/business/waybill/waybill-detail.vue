@@ -156,7 +156,7 @@ export default {
     }
   },
   methods: {
-    async getDetail () {
+    async getList () {
       const { data } = await getTransportOrderDetail(this.$route.query.id)
       this.orderInfo = data
       this.lineList = JSON.parse(data.transportLine).nodeList
@@ -186,9 +186,6 @@ export default {
       })
       return num
     }
-  },
-  created () {
-    this.getDetail()
   }
 }
 </script>
