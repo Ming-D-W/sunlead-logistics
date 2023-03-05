@@ -22,5 +22,6 @@ export function routerDictionary (arr) {
   routerMap['/transit/workArrange-setting'] = '排班设置'
   routerMap['/business/edit-order'] = '订单详情'
   routerMap['/business/waybill-detail'] = '运单详情'
+  routerMap['/transport/task-detail'] = '运输任务详情'
   return routerMap
 }

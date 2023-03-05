@@ -44,6 +44,14 @@ const routes = [
       {
         path: 'MapContent',
         component: () => import('@/views/employess/operational-range/MapContent')
+      },
+      {
+        path: 'pickUptask',
+        component: () => import('@/views/transport/pickUptask')
+      },
+      {
+        path: 'dispatchTask',
+        component: () => import('@/views/transport/dispatchTask')
       }
     ]
   }, {
@@ -117,6 +125,14 @@ const routes = [
       {
         path: 'transport-task',
         component: () => import('@/views/transport/transport-task')
+      },
+      {
+        path: 'task-detail',
+        component: () => import('@/views/transport/transport-task/task-detail.vue')
+      },
+      {
+        path: 'line-manage',
+        component: () => import('@/views/transport/line-manage')
       }
     ]
   }

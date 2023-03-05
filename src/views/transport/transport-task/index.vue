@@ -4,12 +4,12 @@
       <el-form>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="任务编号" label-width="100px">
+            <el-form-item label="任务编号:" label-width="100px">
               <el-input v-model="searchText.id" placeholder="请输入任务编号"/>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="任务分配状态" label-width="100px">
+            <el-form-item label="任务分配状态:" label-width="100px">
               <el-select v-model="searchText.assignedStatus" placeholder="请选择" clearable>
                 <el-option v-for="item in assignedStatusOptions" :key="item.value" :label="item.label"
                            :value="item.value"/>
@@ -17,7 +17,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="满载状态" label-width="100px">
+            <el-form-item label="满载状态:" label-width="100px">
               <el-select v-model="searchText.loadingStatus" placeholder="请选择" clearable>
                 <el-option v-for="item in loadingStatusOptions" :key="item.value" :label="item.label"
                            :value="item.value"/>
@@ -27,12 +27,12 @@
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="车牌号码" label-width="100px">
+            <el-form-item label="车牌号码:" label-width="100px">
               <el-input v-model="searchText.licensePlate" placeholder="请输入车牌号码"/>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="起始地机构" label-width="100px">
+            <el-form-item label="起始地机构:" label-width="100px">
               <treeselect
                 :appendToBody="true"
                 v-model="searchText.startAgencyId"
@@ -42,7 +42,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="目的地机构" label-width="100px">
+            <el-form-item label="目的地机构:" label-width="100px">
               <treeselect
                 :appendToBody="true"
                 v-model="searchText.endAgencyId"
@@ -90,7 +90,7 @@
         <el-table-column label="目的地" prop="endAgency.name"/>
         <el-table-column label="运输任务状态" prop="status"/>
         <el-table-column label="车辆满载状态" prop="loadingStatus"/>
-        <el-table-column label="任务分配状态" prop="assignedStatus" />
+        <el-table-column label="任务分配状态" prop="assignedStatus"/>
         <el-table-column label="计划发车时间" prop="planDepartureTime" width="160px"/>
         <el-table-column label="实际发车时间" prop="actualDepartureTime" width="160px"/>
         <el-table-column label="更新时间" prop="updated" width="160px"/>
@@ -98,14 +98,14 @@
           <template #default="{row}">
             <div style="display: flex;align-items: center">
               <el-link
-                @click="$router.push(`/business/waybill-detail?id=${row.id}`)"
+                @click="$router.push(`/transport/task-detail?id=${row.id}&type=运输管理`)"
                 :underline="false"
                 style="color: #419eff">查看
               </el-link>
               <div class="split"></div>
-              <el-link disabled :underline="false" @click="handleDel">删除</el-link>
+              <el-link disabled :underline="false">删除</el-link>
               <div class="split"></div>
-              <el-link disabled :underline="false" @click="handleDel">删除</el-link>
+              <el-link disabled :underline="false">删除</el-link>
             </div>
           </template>
         </el-table-column>
@@ -223,6 +223,7 @@ export default {
     border: 1px solid #eee;
     border-bottom: none;
     margin-bottom: 10px;
+
     .split {
       height: 14px;
       width: 1px;
