@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="mapBox">
-          <baidu-map class="map" :center="mapCenter" :zoom="15" style="height: 100%">
+          <baidu-map @ready="handler" class="map" :center="mapCenter" style="height: 100%" :zoom="zoom">
             <bm-polygon fill-color="#edcbc7" strokeStyle="dashed" :path="polygonPath" stroke-color="red"
                         :stroke-opacity="0"
                         :stroke-weight="2"
@@ -77,7 +77,8 @@ export default {
       searchText: '',
       mapData: {},
       type: 1,
-      doneLoading: false
+      doneLoading: false,
+      zoom: 10
     }
   },
   methods: {
@@ -139,6 +140,16 @@ export default {
       this.doneLoading = false
       this.$message.success('保存成功')
       this.type = 2
+    },
+    handler ({
+      BMap,
+      map
+    }) {
+      // 自动获取展示的比例
+      // eslint-disable-next-line no-eval
+      const view = map?.getViewport(eval(this.polygonPath))
+      this.zoom = view.zoom - 5
+      this.center = view.center
     }
   },
   async created () {

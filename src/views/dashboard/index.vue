@@ -49,17 +49,26 @@
           <div class="content">
             <div class="item">
               <div class="top tac">订单金额(元)</div>
-              <div class="middle tac">{{ todayData.orderAmount }}</div>
+              <div class="middle tac">
+                <animate-number from="0" :to="todayData.orderAmount" :key="todayData.orderAmount"
+                                duration="1500"></animate-number>
+              </div>
               <div class="bottom">较昨日 +{{ todayData.orderAmountChanges }}</div>
             </div>
             <div class="item">
               <div class="top tac">订单数量(笔)</div>
-              <div class="middle tac">{{ todayData.orderNumber }}</div>
+              <div class="middle tac">
+                <animate-number from="0" :to="todayData.orderNumber" :key="todayData.orderNumber"
+                                duration="1500"></animate-number>
+              </div>
               <div class="bottom">较昨日 +{{ todayData.orderNumberChanges }}</div>
             </div>
             <div class="item">
               <div class="top tac">运输任务(次)</div>
-              <div class="middle tac">{{ todayData.transportTaskNumber }}</div>
+              <div class="middle tac">
+                <animate-number from="0" :to="todayData.transportTaskNumber" :key="todayData.transportTaskNumber"
+                                duration="1500"></animate-number>
+              </div>
               <div class="bottom">较昨日 +{{ todayData.transportTaskNumberChanges }}</div>
             </div>
           </div>
@@ -147,37 +156,37 @@
             <p class="p-t">常用功能</p>
           </div>
           <div class="function-box">
-            <div class="item">
+            <div class="item" @click="$router.push('/branches/operational')">
               <div class="icon">
                 <img src="@/assets/functions/trans-work.png" alt="快递作业">
               </div>
               <div class="content">快递作业</div>
             </div>
-            <div class="item">
+            <div class="item" @click="$router.push('/transport/transport-task')">
               <div class="icon">
                 <img src="@/assets/functions/trans-mission.png" alt="运输任务">
               </div>
               <div class="content">运输任务</div>
             </div>
-            <div class="item">
+            <div class="item" @click="$router.push('/transport/line-manage')">
               <div class="icon">
                 <img src="@/assets/functions/line-manager.png" alt="线路管理">
               </div>
               <div class="content">线路管理</div>
             </div>
-            <div class="item">
+            <div class="item" @click="$router.push('/transit/vehicle')">
               <div class="icon">
                 <img src="@/assets/functions/car-manager.png" alt="车辆管理">
               </div>
               <div class="content">车辆管理</div>
             </div>
-            <div class="item">
+            <div class="item" @click="$router.push('/transit/driver')">
               <div class="icon">
                 <img src="@/assets/functions/driver-manager.png" alt="司机管理">
               </div>
               <div class="content">司机管理</div>
             </div>
-            <div class="item">
+            <div class="item" @click="$router.push('/transit/freight-manage')">
               <div class="icon">
                 <img src="@/assets/functions/money-check.png" alt="运费查询">
               </div>
@@ -248,7 +257,7 @@
 import chinaMap from '@/assets/json/china.json'
 import { getWorkspace } from '@/api/workspace'
 import {
-  lineManager,
+  // lineManager,
   liquidFillForth,
   liquidFillOne,
   liquidFillThree,
@@ -257,6 +266,7 @@ import {
   orderDistribution
 } from '@/utils/echarts'
 import AutoTable from '@/views/dashboard/components/AutoTable/index.vue'
+import { option } from '@/utils/chinaMap'
 
 export default {
   name: 'dashboard-page',
@@ -266,7 +276,11 @@ export default {
       backlog: {},
       orderLineChart: {},
       organOverview: {},
-      todayData: {},
+      todayData: {
+        orderAmount: 0,
+        orderNumber: 0,
+        transportTaskNumber: 0
+      },
       transportTaskList: []
     }
   },
@@ -315,46 +329,47 @@ export default {
       const distributionOptions = orderDistribution()
 
       // 线路管理
-      const arr = [
-        [
-          {
-            name: '北京'
-          },
-          {
-            name: '浙江'
-          }
-        ], [
-          {
-            name: '安徽'
-          },
-          {
-            name: '浙江'
-          }
-        ], [
-          {
-            name: '湖南'
-          },
-          {
-            name: '浙江'
-          }
-        ], [
-          {
-            name: '四川'
-          },
-          {
-            name: '浙江'
-          }
-        ], [
-          {
-            name: '青海'
-          },
-          {
-            name: '浙江'
-          }
-        ]
-      ]
+      // const arr = [
+      //   [
+      //     {
+      //       name: '北京'
+      //     },
+      //     {
+      //       name: '浙江'
+      //     }
+      //   ], [
+      //     {
+      //       name: '安徽'
+      //     },
+      //     {
+      //       name: '浙江'
+      //     }
+      //   ], [
+      //     {
+      //       name: '湖南'
+      //     },
+      //     {
+      //       name: '浙江'
+      //     }
+      //   ], [
+      //     {
+      //       name: '四川'
+      //     },
+      //     {
+      //       name: '浙江'
+      //     }
+      //   ], [
+      //     {
+      //       name: '青海'
+      //     },
+      //     {
+      //       name: '浙江'
+      //     }
+      //   ]
+      // ]
       const lineManagerCharts = this.$echarts.init(this.$refs.lineManagerCharts)
-      const lineManagerOptions = lineManager(arr)
+      // const lineManagerOptions = lineManager(arr)
+      const lineManagerOptions = option
 
       myChartOne.setOption(options)
       myChartTwo.setOption(optionsTwo)

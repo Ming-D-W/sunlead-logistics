@@ -52,6 +52,10 @@ const routes = [
       {
         path: 'dispatchTask',
         component: () => import('@/views/transport/dispatchTask')
+      },
+      {
+        path: 'operational',
+        component: () => import('@/views/branches/operational')
       }
     ]
   }, {

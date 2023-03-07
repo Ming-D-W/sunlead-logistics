@@ -130,3 +130,12 @@ export function getPickupMissionList (data) {
     data
   })
 }
+
+// 获取派件作业列表
+export function getDispatchList (data) {
+  return request({
+    method: 'POST',
+    url: '/pickup-dispatch-task-manager/page',
+    data
+  })
+}
