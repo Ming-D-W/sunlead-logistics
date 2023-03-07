@@ -64,7 +64,7 @@
     </el-card>
     <el-card class="tab-item">
       <el-row type="flex" justify="left">
-        <div class="item" :class="{active:!searchText.status}" @click="changeStatus(1)">
+        <div class="item" :class="{active:!searchText.status}" @click="changeStatus(null)">
           <span>全部 </span>
         </div>
         <div class="item" :class="{active:searchText.status===1}" @click="changeStatus(1)">
@@ -79,15 +79,24 @@
       </el-row>
     </el-card>
     <el-card style="margin-top: 20px">
+      <el-button type="primary" @click="handleAssign" style="margin-bottom: 20px">人工分配</el-button>
       <el-table :row-style="{fontSize:'13px'}" v-loading="loading" :data="tableData"
                 :header-cell-style="{background:'#f8faff'}" stripe>
         <template #empty>
           <empty-img/>
         </template>
+        <el-table-column
+          :selectable="selectableFunc"
+          type="selection"
+          width="55"/>
         <el-table-column label="序号" type="index"/>
         <el-table-column label="取件作业编号" prop="id" width="180px"/>
         <el-table-column label="所在营业部" prop="agencyName"/>
-        <el-table-column label="任务分配状态" prop="assignedStatus"/>
+        <el-table-column label="任务分配状态">
+          <template #default="{row}">
+            <MyStatus :text="['已分配','待人工分配']" :status="row.assignedStatus"/>
+          </template>
+        </el-table-column>
         <el-table-column label="快递员姓名" prop="courierName"/>
         <el-table-column label="订单编号" prop="orderId"/>
         <el-table-column label="预计开始时间" prop="estimatedStartTime"/>
@@ -160,6 +169,12 @@ export default {
     async changeStatus (newStatus) {
       this.searchText.status = newStatus
       this.getList()
+    },
+    selectableFunc (row, index) {
+      return false
+    },
+    handleAssign () {
+      this.$message.error('请选择要分配的作业')
     }
   }
 }
@@ -224,6 +239,7 @@ export default {
       color: #e15536;
     }
   }
+
   ::v-deep .el-date-editor--datetimerange.el-input__inner {
     width: 100%;
   }

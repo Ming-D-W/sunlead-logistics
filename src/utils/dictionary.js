@@ -23,5 +23,6 @@ export function routerDictionary (arr) {
   routerMap['/business/edit-order'] = '订单详情'
   routerMap['/business/waybill-detail'] = '运单详情'
   routerMap['/transport/task-detail'] = '运输任务详情'
+  routerMap['/branches/operational'] = '快递作业管理'
   return routerMap
 }

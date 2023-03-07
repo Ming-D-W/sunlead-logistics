@@ -13,7 +13,9 @@ import * as echarts from 'echarts'
 import scroll from 'vue-seamless-scroll'
 import BaiduMap from 'vue-baidu-map'
 import MyComponents from '@/components/index'
+import VueAnimateNumber from 'vue-animate-number'
 
+Vue.use(VueAnimateNumber)
 Vue.use(MyComponents)
 
 Vue.use(BaiduMap, {
