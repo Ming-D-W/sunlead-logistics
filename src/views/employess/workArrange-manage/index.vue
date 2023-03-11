@@ -66,14 +66,14 @@
         <el-table-column fixed type="selection"/>
         <el-table-column fixed label="员工账号" prop="employeeNumber"/>
         <el-table-column fixed label="员工姓名" prop="name"/>
-        <el-table-column fixed label="员工电话" prop="phone" width="120" />
+        <el-table-column fixed label="员工电话" prop="phone" width="120"/>
         <el-table-column fixed label="员工角色" prop="userType"/>
         <el-table-column fixed label="当前工作模式" prop="workPatternId" width="120">
           <template #default="{row}">
-            {{ row.workPatternId | formatWorkPattern}}
+            {{ row.workPatternId | formatWorkPattern }}
           </template>
         </el-table-column>
-        <el-table-column v-for="item in 28" :key="item" :label="item.toString()">
+        <el-table-column v-for="item in days" :key="item" :label="item.toString()">
           <template #default="{row}">
             <div v-if="row.workSchedules[item]" class="work">上</div>
             <div v-else class="rest">休</div>
@@ -205,6 +205,11 @@ export default {
       }
     }
   },
+  computed: {
+    days () {
+      return this.tableData[0]?.workSchedules?.length || 0
+    }
+  },
   beforeCreate () {
     that = this
   }
@@ -229,6 +234,7 @@ export default {
     line-height: 40px;
   }
 }
+
 ::v-deep .el-table {
   border: 1px solid #eee;
   border-bottom: none;
@@ -241,6 +247,7 @@ export default {
     margin: 0 10px;
   }
 }
+
 .work {
   width: 24px;
   height: 24px;
@@ -252,6 +259,7 @@ export default {
   color: #e15536;
   text-align: center;
 }
+
 .rest {
   width: 24px;
   height: 24px;
